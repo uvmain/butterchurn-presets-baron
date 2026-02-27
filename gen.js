@@ -6,10 +6,6 @@ async function main() {
   [key: string]: any
 }
 
-interface PresetPaths {
-  [key: string]: string
-}
-
 export const presets: Presets = {}
 
 interface GetPresetOptions {
@@ -18,7 +14,53 @@ interface GetPresetOptions {
   count?: number
 }
 
-const presetPaths: PresetPaths = {`)
+export function getPresets(options?: GetPresetOptions): Presets {
+  const { name, random, count } = options || {}
+  if (name) {
+    return { [name]: presets[name] }
+  }
+
+  if (random) {
+    const array = Object.entries(presets)
+    let currentIndex = array.length
+    while (currentIndex !== 0) {
+      const randomIndex = Math.floor(Math.random() * currentIndex)
+      currentIndex--
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ]
+    }
+    if (count && count < array.length) {
+      return array
+        .slice(0, count)
+        .reduce((acc: Presets, [key, value]) => {
+          acc[key] = value
+          return acc
+        }, {})
+    }
+    else {
+      return array.reduce((acc: Presets, [key, value]) => {
+        acc[key] = value
+        return acc
+      }, {})
+    }
+  }
+  else {
+    if (count && count < Object.keys(presets).length) {
+      return Object.entries(presets)
+        .slice(0, count)
+        .reduce((acc: Presets, [key, value]) => {
+          acc[key] = value
+          return acc
+        }, {})
+    }
+    else {
+      return presets
+    }
+  }
+}
+`)
 
   const files = await readdir('./src/presets')
 
@@ -27,45 +69,8 @@ const presetPaths: PresetPaths = {`)
       continue
     }
 
-    console.log(`  '${basename(file, '.json')}': './presets/${file}',`)
+    console.log(`presets['${basename(file, '.json')}'] = await import('./presets/${file}')`)
   }
-
-  console.log(`}
-
-export async function getPresets(options?: GetPresetOptions): Promise<Presets> {
-  const { name, random } = options || {}
-  let count: number | undefined = options?.count
-  if (count !== undefined && (typeof count !== 'number' || count < 1)) {
-    throw new Error('Invalid count')
-  }
-  else if (count !== undefined && count > Object.keys(presetPaths).length) {
-    count = Object.keys(presetPaths).length
-  }
-
-  if (name) {
-    const presetData = await import(presetPaths[name])
-    return { [name]: presetData }
-  }
-
-  const presetNames = Object.keys(presetPaths)
-
-  if (random) {
-    const shuffled = [...presetNames].sort(() => Math.random() - 0.5)
-    const selectedNames = count ? shuffled.slice(0, count) : shuffled
-    const result: Presets = {}
-    for (const name of selectedNames) {
-      result[name] = await import(presetPaths[name])
-    }
-    return result
-  }
-  else {
-    const result: Presets = {}
-    for (const name of count ? presetNames.slice(0, count) : presetNames) {
-      result[name] = await import(presetPaths[name])
-    }
-    return result
-  }
-}`)
 }
 
 main().catch(console.error)
