@@ -20,7 +20,7 @@ export function getPresets(): Presets {
       continue
     }
 
-    console.log(`presets['${basename(file, '.json').replaceAll(`'`, `\\'`)}'] = await import('./presets/${file.replaceAll(`'`, `\\'`)}')`)
+    console.log(`presets['${basename(file, '.json')}'] = await import('./presets/${file}')`)
   }
 }
 
