@@ -1,0 +1,26 @@
+{
+  "name": "butterchurn-presets-baron",
+  "version": "1.0.0",
+  "description": "Butterchurn preset pack by baron",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "presets/"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": [
+    "butterchurn",
+    "milkdrop",
+    "presets",
+    "visualizer"
+  ],
+  "author": "baron",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uvmain/butterchurn-presets-baron.git"
+  }
+}
