@@ -9,5 +9,7 @@ export default antfu({
     'no-new': 'off',
     'test/prefer-lowercase-title': 'off',
     'no-undef': 'off',
+    'antfu/no-top-level-await': 'off',
+    'dot-notation': 'off',
   },
 }, {})
