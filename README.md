@@ -14,7 +14,8 @@ npm install butterchurn-presets-baron
 ```js
 import { getPresets } from 'butterchurn-presets-baron'
 
-const allPresets = getPresets()
+const options = { random: true, count: 50 }
+const allPresets = getPresets(options)
 const firstPreset = allPresets[Object.keys(allPresets)[0]]
 visualizer.loadPreset(preset, blendSeconds)
 ```
