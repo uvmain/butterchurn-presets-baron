@@ -1,15 +1,13 @@
 {
   "name": "butterchurn-presets-baron",
+  "type": "module",
   "version": "1.0.0",
-  "description": "Butterchurn preset pack by baron",
-  "main": "index.js",
-  "files": [
-    "index.js",
-    "presets/"
-  ],
-  "sideEffects": false,
-  "scripts": {
-    "test": "node --test"
+  "description": "Butterchurn preset pack",
+  "author": "baron",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uvmain/butterchurn-presets-baron.git"
   },
   "keywords": [
     "butterchurn",
@@ -17,10 +15,27 @@
     "presets",
     "visualizer"
   ],
-  "author": "baron",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/uvmain/butterchurn-presets-baron.git"
+  "sideEffects": false,
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "build": "tsc -p .",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "directory-import": "^3.3.2"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^7.6.1",
+    "@types/node": "^25.3.2",
+    "eslint": "^10.0.2",
+    "typescript": "^5.9.3"
   }
 }
