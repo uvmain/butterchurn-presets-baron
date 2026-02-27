@@ -14,8 +14,8 @@ interface GetPresetOptions {
   count?: number
 }
 
-export function getPresets(options: GetPresetOptions): Presets {
-  const { name, random, count } = options
+export function getPresets(options?: GetPresetOptions): Presets {
+  const { name, random, count } = options || {}
   if (name) {
     return { [name]: presets[name] }
   }
